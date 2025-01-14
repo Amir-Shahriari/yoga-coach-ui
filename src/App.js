@@ -3,31 +3,29 @@ import axios from "axios";
 import "./App.css";
 
 function App() {
-  // State for user inputs
-  const [duration, setDuration] = useState(20); // Default: 20 minutes
-  const [intensity, setIntensity] = useState("moderate"); // Default: moderate
-  const [muscleGroups, setMuscleGroups] = useState([]); // List of selected muscles
-  const [plan, setPlan] = useState(null); // Stores the generated plan
+  const [duration, setDuration] = useState(10); // Default duration in minutes
+  const [intensity, setIntensity] = useState("moderate");
+  const [muscleGroups, setMuscleGroups] = useState([]);
+  const [yogaPlan, setYogaPlan] = useState([]);
 
-  // List of available muscle groups
-  const muscleOptions = ["core", "legs", "arms", "spine", "back", "hips"];
+  const muscleOptions = ["arms", "spine", "back", "hips", "legs", "core"];
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleCheckboxChange = (event) => {
+    const value = event.target.value;
+    setMuscleGroups((prev) =>
+      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
+    );
+  };
 
+  const generateYogaPlan = async () => {
     try {
       const response = await axios.post(
-        `http://127.0.0.1:8000/generate_plan/`,
-        muscleGroups,
-        {
-          params: { duration, intensity },
-        }
+        `http://127.0.0.1:8000/generate_plan/?duration=${duration}&intensity=${intensity}`,
+        muscleGroups
       );
-      setPlan(response.data.plan); // Update state with the plan
+      setYogaPlan(response.data.plan || []);
     } catch (error) {
       console.error("Error generating yoga plan:", error);
-      setPlan(null);
     }
   };
 
@@ -37,19 +35,15 @@ function App() {
         <h1>Yoga Coach</h1>
       </header>
       <main>
-        <form onSubmit={handleSubmit}>
-          {/* Duration Input */}
+        <div className="form">
           <label>
             Duration (minutes):
             <input
               type="number"
               value={duration}
-              onChange={(e) => setDuration(parseInt(e.target.value, 10))}
-              min="5"
+              onChange={(e) => setDuration(e.target.value)}
             />
           </label>
-
-          {/* Intensity Dropdown */}
           <label>
             Intensity:
             <select
@@ -61,50 +55,40 @@ function App() {
               <option value="high">High</option>
             </select>
           </label>
-
-          {/* Muscle Groups Checkboxes */}
-          <fieldset>
-            <legend>Select Target Muscle Groups:</legend>
-            {muscleOptions.map((muscle) => (
-              <label key={muscle}>
+          <div className="checkbox-group">
+            <label>Select Target Muscle Groups:</label>
+            {muscleOptions.map((option) => (
+              <label key={option}>
                 <input
                   type="checkbox"
-                  value={muscle}
-                  checked={muscleGroups.includes(muscle)}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setMuscleGroups([...muscleGroups, muscle]);
-                    } else {
-                      setMuscleGroups(
-                        muscleGroups.filter((group) => group !== muscle)
-                      );
-                    }
-                  }}
+                  value={option}
+                  onChange={handleCheckboxChange}
                 />
-                {muscle}
+                {option}
               </label>
             ))}
-          </fieldset>
-
-          <button type="submit">Generate Yoga Plan</button>
-        </form>
-
-        {/* Display the Generated Plan */}
-        {plan && (
-          <section>
-            <h2>Generated Yoga Plan</h2>
-            <ul>
-              {plan.map((pose, index) => (
-                <li key={index}>
-                  <h3>{pose.pose}</h3>
-                  <p>{pose.description}</p>
-                  <p>Duration: {pose.duration}</p>
-                  <p>Instructions: {pose.instructions}</p>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
+          </div>
+          <button onClick={generateYogaPlan}>Generate Yoga Plan</button>
+        </div>
+        <div className="results">
+          <h2>Generated Yoga Plan</h2>
+          <div className="yoga-plan">
+            {yogaPlan.map((pose, index) => (
+              <div className="pose-card" key={index}>
+                <h3>{pose.pose}</h3>
+                <p>
+                  <strong>Description:</strong> {pose.description}
+                </p>
+                <p>
+                  <strong>Duration:</strong> {pose.duration}
+                </p>
+                <p>
+                  <strong>Instructions:</strong> {pose.instructions}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
       </main>
     </div>
   );
