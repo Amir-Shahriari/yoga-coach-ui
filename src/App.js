@@ -29,15 +29,25 @@ function App() {
     }
   };
 
-
   return (
-    <div className="App" style={{ background: "linear-gradient(to bottom right, #07506e, #61d0cf)", color: "#fff" }}>
-      <header className="App-header"  style={{backgroundColor: "rgb(44 155 154 / 34%)"}}>
+    <div className="App">
+      <header className="App-header" style={{ backgroundColor: "rgb(44 155 154 / 34%)" }}>
         <h1 style={{ fontFamily: "DynaPuff", margin: "20px" }}>Yoga Coach</h1>
       </header>
       <main>
-        <div className="form" style={{ borderRadius: "20px", padding: "20px", boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)" }}>
-          <label  style={{ color: "#4a4a4a" }}>
+        <div
+          className="form"
+          style={{
+            borderRadius: "20px",
+            padding: "20px",
+            boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
+            background: "rgba(255, 255, 255, 0.8)",
+            maxWidth: "600px",
+            margin: "0 auto",
+            
+          }}
+        >
+          <label style={{ color: "#4a4a4a" }}>
             Duration (minutes):
             <input
               type="number"
@@ -58,7 +68,7 @@ function App() {
               onChange={(e) => setIntensity(e.target.value)}
               style={{
                 margin: "10px 0",
-                padding: "5px 100px",
+                padding: "5px",
                 borderRadius: "10px",
                 border: "1px solid #ccc",
               }}
@@ -72,11 +82,7 @@ function App() {
             <label style={{ color: "#4a4a4a" }}>Select Target Muscle Groups:</label>
             {muscleOptions.map((option) => (
               <label key={option} style={{ display: "block", margin: "5px 0", color: "#4a4a4a" }}>
-                <input
-                  type="checkbox"
-                  value={option}
-                  onChange={handleCheckboxChange}
-                />
+                <input type="checkbox" value={option} onChange={handleCheckboxChange} />
                 {option}
               </label>
             ))}
@@ -98,7 +104,7 @@ function App() {
           </button>
         </div>
         <div className="results" style={{ marginTop: "30px", textAlign: "center" }}>
-          <h2 style={{ fontFamily: "DynaPuff" , color: "rgb(160 27 177 / 45%)"}}>Generated Yoga Plan</h2>
+          <h2 style={{ fontFamily: "DynaPuff", color: "rgb(160 27 177 / 45%)" }}>Generated Yoga Plan</h2>
           <div className="yoga-plan">
             {yogaPlan.map((pose, index) => (
               <div
