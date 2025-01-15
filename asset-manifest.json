@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/yoga-coach-ui/static/css/main.00ecbf32.css",
-    "main.js": "/yoga-coach-ui/static/js/main.66cc2473.js",
+    "main.css": "/yoga-coach-ui/static/css/main.ce5fbecc.css",
+    "main.js": "/yoga-coach-ui/static/js/main.f8111d2b.js",
     "static/js/488.5160bc99.chunk.js": "/yoga-coach-ui/static/js/488.5160bc99.chunk.js",
     "index.html": "/yoga-coach-ui/index.html",
-    "main.00ecbf32.css.map": "/yoga-coach-ui/static/css/main.00ecbf32.css.map",
-    "main.66cc2473.js.map": "/yoga-coach-ui/static/js/main.66cc2473.js.map",
+    "main.ce5fbecc.css.map": "/yoga-coach-ui/static/css/main.ce5fbecc.css.map",
+    "main.f8111d2b.js.map": "/yoga-coach-ui/static/js/main.f8111d2b.js.map",
     "488.5160bc99.chunk.js.map": "/yoga-coach-ui/static/js/488.5160bc99.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.00ecbf32.css",
-    "static/js/main.66cc2473.js"
+    "static/css/main.ce5fbecc.css",
+    "static/js/main.f8111d2b.js"
   ]
 }
